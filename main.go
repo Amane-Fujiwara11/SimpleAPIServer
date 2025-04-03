@@ -6,10 +6,12 @@ import (
 	"net/http"
 )
 
+// Responseの構造体
 type Response struct {
 	Message string `json:"message"`
 }
 
+// HTTPハンドラー
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	resp := Response{Message: "Hello, World!"}
 	w.Header().Set("Content-Type", "application/json")
@@ -40,6 +42,10 @@ func main() {
 
 	port := "8080"
 	fmt.Printf("Server is running on http://localhost:%s\n", port)
+
+	// 並行処理の関数を実行
+	runConcurrentTasks()
+
 	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		fmt.Println("Error starting server:", err)
 	}
