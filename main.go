@@ -46,6 +46,10 @@ func main() {
 	// 並行処理の関数を実行
 	runConcurrentTasks()
 
+	// HTTPリクエストの取得
+	url := "https://jsonplaceholder.typicode.com/posts/1" // テスト用のURL
+	fetchURL(url)                                         // URLを取得
+
 	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		fmt.Println("Error starting server:", err)
 	}
