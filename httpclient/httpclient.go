@@ -1,4 +1,4 @@
-package main
+package httpclient
 
 import (
 	"fmt"
@@ -7,8 +7,7 @@ import (
 )
 
 // URLを取得するための関数
-func fetchURL(url string) {
-	// HTTP GETリクエストを送信
+func FetchURL(url string) {
 	resp, err := http.Get(url)
 	if err != nil {
 		// エラーハンドリング: リクエストエラーの表示

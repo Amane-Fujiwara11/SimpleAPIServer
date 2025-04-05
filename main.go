@@ -1,56 +1,21 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"net/http"
+
+	"github.com/Amane-Fujiwara11/SimpleAPIServer/concurrent"
+	"github.com/Amane-Fujiwara11/SimpleAPIServer/httpclient"
 )
 
-// Responseの構造体
-type Response struct {
-	Message string `json:"message"`
-}
-
-// HTTPハンドラー
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-	resp := Response{Message: "Hello, World!"}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
-}
-
-func goodbyeHandler(w http.ResponseWriter, r *http.Request) {
-	resp := Response{Message: "Goodbye, World!"}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
-}
-
-func greetHandler(w http.ResponseWriter, r *http.Request) {
-	name := r.URL.Query().Get("name")
-	if name == "" {
-		http.Error(w, "Name parameter is required", http.StatusBadRequest)
-		return
-	}
-	resp := Response{Message: fmt.Sprintf("Hello, %s!", name)}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
-}
-
 func main() {
-	http.HandleFunc("/hello", helloHandler)
-	http.HandleFunc("/goodbye", goodbyeHandler)
-	http.HandleFunc("/greet", greetHandler)
-
 	port := "8080"
-	fmt.Printf("Server is running on http://localhost:%s\n", port)
 
-	// 並行処理の関数を実行
-	runConcurrentTasks()
+	// 並行処理のタスクを実行
+	concurrent.RunConcurrentTasks(5) // タスク数を指定
 
 	// HTTPリクエストの取得
 	url := "https://jsonplaceholder.typicode.com/posts/1" // テスト用のURL
-	fetchURL(url)                                         // URLを取得
+	httpclient.FetchURL(url)                              // URLを取得
 
-	if err := http.ListenAndServe(":"+port, nil); err != nil {
-		fmt.Println("Error starting server:", err)
-	}
+	fmt.Printf("Server is running on http://localhost:%s\n", port)
 }
