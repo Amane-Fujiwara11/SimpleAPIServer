@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Amane-Fujiwara11/SimpleAPIServer/concurrent"
+	"github.com/Amane-Fujiwara11/SimpleAPIServer/handler"
 	"github.com/Amane-Fujiwara11/SimpleAPIServer/httpclient"
 )
 
@@ -18,4 +19,6 @@ func main() {
 	httpclient.FetchURL(url)                              // URLを取得
 
 	fmt.Printf("Server is running on http://localhost:%s\n", port)
+
+	handler.GlobalErrorHandler()
 }
