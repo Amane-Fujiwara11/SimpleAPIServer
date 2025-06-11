@@ -10,7 +10,6 @@ import (
 
 func main() {
 	port := "8080"
-
 	// 並行処理のタスクを実行
 	concurrent.RunConcurrentTasks(5) // タスク数を指定
 
